@@ -4,11 +4,12 @@ import { useState } from "react";
 import { withRouter } from 'react-router-dom'
 
 function SignUp(props) {
-    const [userData, setuserData] = useState({
+     const [userData, setuserData] = useState({
         email:'',
         firstName:'',
         lastName:'',
         password:''
+  
       
 })
 
@@ -68,13 +69,13 @@ const validateLastName=()=>{
 const [passwordError, setpasswordError] = useState("")
 const validatePassword=()=>{
     if(userData.password){
-        let regex =/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,15}$/;
+        let regex =/^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
         if(regex.test(userData.password)){
             setpasswordError("");
             return true;
         }
         else{
-            setpasswordError("Password should contains atleast 6 charaters and containing uppercase,lowercase and numbers");
+            setpasswordError("enter valid password, minimum eight characters and containing uppercase,lowercase and number");
         }}
         else{
             setpasswordError("enter password");
@@ -98,9 +99,10 @@ let saveData=(event)=>{
     validateFirstName();
     validateLastName();
     validatePassword();
+
   
-    if(validateEmail()&& validateFirstName() && validateLastName() && validatePassword()){
-        props.getUserData(userData)
+    if(validateEmail()&& validateFirstName() && validateLastName() && validatePassword() ){
+       props.getUserData(userData)
         // event.preventDefault();
         //clearing the form
         setuserData({
@@ -108,6 +110,7 @@ let saveData=(event)=>{
             firstName:'',
             lastName:'',
             password:''
+            
            
         });
     }
@@ -121,9 +124,10 @@ let saveData=(event)=>{
        }
     return (
         <div>
-            <h1>Signup</h1>
-            <div className='container'>
-            
+           
+           <h1>SignUp</h1>
+         <div className='container'>
+       
             <div className="mb-3">
                     <input
                     name="firstName"
@@ -169,12 +173,19 @@ let saveData=(event)=>{
                     />
                 {passwordError&&<div className="some">{passwordError}</div>}
                 </div>
+
                
-                <button type="submit" className="btn btn-primary" onClick={saveData}>SignUp</button>
+               <button type="submit" className="btn btn-primary" onClick={saveData}>SignUp</button>
+               </div>
+                <h4 style={{cursor:'pointer'}} onClick={navigateToLogin}>Already have an account? Login here !</h4>
             </div>
-            <h4 style={{cursor:'pointer'}} onClick={navigateToLogin}>Already have an account? Login here !</h4>
-        </div>
+            
+            
+      
     )
 }
 
 export default withRouter(SignUp)
+
+
+

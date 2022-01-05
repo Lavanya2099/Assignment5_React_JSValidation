@@ -5,7 +5,7 @@ function Home() {
         <div className='App'>
        
 
-         <img src="img.webp" width="100%" height="700px" className='image'></img>
+         <img src="img1.png" width="100%" height="700px" className='image'></img>
 
         </div>
       

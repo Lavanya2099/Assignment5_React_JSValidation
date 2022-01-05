@@ -4,17 +4,17 @@ import { useState } from "react";
 import { withRouter } from 'react-router-dom'
 
 function Login(props) {
-    const [userData, setuserData] = useState({
+    const [loginData, setloginData] = useState({
         email:'',
         password:''
-      
+       
 })
 
 const [emailError, setemailError] = useState("")
 const validateEmail=()=>{
-    if(userData.email){
+    if(loginData.email){
         let regex = /^\S+@\S+$/;
-        if(regex.test(userData.email)){
+        if(regex.test(loginData.email)){
             setemailError("");
             return true;
         }
@@ -30,14 +30,14 @@ const validateEmail=()=>{
 
 const [passwordError, setpasswordError] = useState("")
 const validatePassword=()=>{
-    if(userData.password){
-        let regex =/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,15}$/;
-        if(regex.test(userData.password)){
+    if(loginData.password){
+    let regex =/^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+        if(regex.test(loginData.password)){
             setpasswordError("");
             return true;
         }
         else{
-            setpasswordError("Password should contains atleast 6 charaters and containing uppercase,lowercase and numbers");
+            setpasswordError("enter valid password, minimum eight characters and containing uppercase,lowercase and number");
         }}
         else{
             setpasswordError("enter password");
@@ -46,10 +46,13 @@ const validatePassword=()=>{
 };
 
 
-let updateUserData=(event)=>{
+
+
+
+let updateLoginData=(event)=>{
     // event.preventDefault();
-    setuserData({
-        ...userData,
+    setloginData({
+        ...loginData,
         [event.target.name]:event.target.value,
     })
 }
@@ -61,36 +64,36 @@ let saveData=(event)=>{
     validatePassword();
   
     if(validateEmail()&& validatePassword()){
-        props.getUserData(userData)
+        props.getLoginData(loginData)
         // event.preventDefault();
         //clearing the form
-        setuserData({
+        setloginData({
             email:'',
             password:''
            
         });
+  
     }
-   
+    
 };
-
-
-    let navigateToSignUp=()=>{
+ let navigateToSignUp=()=>{
         // console.log(props);
         props.history.push('/signup')
        }
     return (
         <div>
-            <h1>Login</h1>
-            <div className='container'>
-            
+             
+             <h1>Login</h1>
+           <div className='container'>
+           
             <div className="mb-3">
                     <input
                     name="email"
                     type="text"
                     className="form-control"
                     placeholder="Enter Email"
-                    value={userData.email}
-                    onChange={(event)=>{updateUserData(event)}}
+                    value={loginData.email}
+                    onChange={(event)=>{updateLoginData(event)}}
                     />
                 {emailError&&<div className="some">{emailError}</div>}
                 </div>
@@ -100,13 +103,15 @@ let saveData=(event)=>{
                     type="password"
                     className="form-control"
                     placeholder="Enter Password"
-                    value={userData.password}
-                    onChange={(event)=>{updateUserData(event)}}
+                    value={loginData.password}
+                    onChange={(event)=>{updateLoginData(event)}}
                     />
                 {passwordError&&<div className="some">{passwordError}</div>}
                 </div>
+            
                
                 <button type="submit" className="btn btn-primary" onClick={saveData}>Login</button>
+              
             </div>
             <h4 style={{cursor:'pointer'}} onClick={navigateToSignUp}>Don't have an account? Signup here !</h4>
         </div>
@@ -114,3 +119,4 @@ let saveData=(event)=>{
 }
 
 export default withRouter(Login)
+
